@@ -3,7 +3,7 @@
 /**
  * main - main function
  * description - start of the program
- * return: should return 0
+ * Return: returns 0
  */
 int main(void)
 {
