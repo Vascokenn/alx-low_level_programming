@@ -3,6 +3,11 @@
 /* more headers goes there */
 
 /* betty style doc for function main goes there */
+/**
+ * main - main function of the program
+ * description - start of the program
+ * Return: returns 0
+ */
 int main(void)
 {
 	int n;
