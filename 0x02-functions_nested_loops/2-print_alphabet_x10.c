@@ -11,7 +11,7 @@ int counter;
 
 for (counter = 1; counter <= 10; counter++)
 {
-for (alph = 'a'; alph <= 'z'; alph++;)
+for (alph = 'a'; alph <= 'z'; alph++)
 {_putchar(alph);
 }
 _putchar('\n');
