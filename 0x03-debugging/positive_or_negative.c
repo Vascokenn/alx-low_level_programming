@@ -5,9 +5,7 @@
 
 /* betty style doc for function main goes there */
 /**
- * main - Determine if a random number is positive , negative or zero
- * description - start of the program
- * positive_or_negative: determines if a number is positive or negative
+ * positive_or_negative - prints if a number is negative or positive
  * @i: number
  */
 void positive_or_negative(int i)
