@@ -1,6 +1,7 @@
 #include "main.h"
 /**
 * print_line - prints a line on the terminal
+* @n: the number
 * Return: 0
 */
 
@@ -15,9 +16,9 @@ void print_line(int n)
 	else
 	{
 		for (num_lines = 1; num_lines <= n; num_lines++)
-			{
-				_putchar('_');
-			}
-			_putchar('\n');
+		{
+			_putchar('_');
+	}
+	_putchar('\n');
 	}
 }
