@@ -1,6 +1,6 @@
 #include "main.h"
 /**
-* more_numbers - prints 10 times the numbers, from 0 to 14, followed by a new line.
+* more_numbers - prints 10 times the numbers
 */
 
 void more_numbers(void)
@@ -13,7 +13,7 @@ void more_numbers(void)
 		{
 			tens = number / 10;
 			units = number % 10;
-			if ( number > 9)
+			if (number > 9)
 				_putchar(tens + '0');
 			_putchar(units + '0');
 		}
