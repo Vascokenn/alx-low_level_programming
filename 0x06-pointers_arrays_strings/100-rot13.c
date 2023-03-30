@@ -1,46 +1,31 @@
 #include "main.h"
 /**
- * print_number - print an int numbers.
- * @n: number tested
- * Return: Always 0.
+ * rot13 - Write a function that encodes a string using rot13
+ *
+ * @hi: This is my input string
+ *
+ * Return: String converted to rot13
+ *
  */
-void print_number(int n)
+
+char *rot13(char *hi)
 {
-	int i, j, digit, digits, power;
-	unsigned int temp, numchar, number;
+	int index, count;
 
-	digit = 0;
-	if (n < 0)
-	{
-		_putchar('-');
-		temp = -n;
-	}
-	else
-	{
-		temp = n;
-	}
+	char minus[] = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
+	char mayus[] = "NOPQRSTUVWXYZABCDEFGHIJKLMnopqrstuvwxyzabcdefghijklm";
 
-	number = temp;
-
-	while (number >= 10)
+	for (index = 0; hi[index] != '\0'; ++index)
 	{
-		number = number / 10;
-		digit++;
+		for (count = 0; minus[count] != '\0' ; count++)
+		{
+			if (hi[index] == minus[count])
+			{
+				hi[index] = mayus[count];
+				break;
+			}
+		}
 	}
-	digits = digit + 1;
-	power = 1;
-	i = 1;
-
-	while (i < digits)
-	{
-		power = power * 10;
-		i++;
-	}
-	j = power;
-	while (j >= 1)
-	{
-		numchar = (temp / j) % 10;
-		_putchar(numchar + '0');
-		j = j / 10;
-	}
+	hi[index] = '\0';
+	return (hi);
 }
