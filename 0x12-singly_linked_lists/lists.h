@@ -1,4 +1,4 @@
-ifndef _LIST_
+#ifndef _LIST_
 #define _LIST_
 /**
  * struct list_s - singly linked list
