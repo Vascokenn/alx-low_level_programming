@@ -1,64 +1,33 @@
 #include "main.h"
-/**
- * main - entry point
- * @argc: number of arguments passed to the function
- * @argv: two files
- * Return: int
- */
-int main(int argc, char *argv[])
-{
-	int inputFD, outputFD, nBytes_read, nBytes_write;
-	char text[BUF_SIZE];
-
-	if (argc != 3)
-	{
-		dprintf(STDERR_FILENO, "Usage: cp file_from file_to\n");
-		exit(97);
-	}
-	inputFD = open(argv[1], O_RDONLY);
-	if (inputFD == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n",
-			argv[1]);
-		exit(98);
-	}
-	outputFD = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC, 0664);
-	if (outputFD == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
-		exit(99);
-	}
-	while ((nBytes_read = read(inputFD, text, BUF_SIZE)) > 0)
-	{
-		nBytes_write = write(outputFD, text, nBytes_read);
-		if (nBytes_write == -1)
-		{
-			dprintf(STDERR_FILENO, "Error: Can't write to %s\n",
-				argv[2]);
-			exit(99);
-		}
-	}
-	if (nBytes_read == -1)
-	{
-		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n",
-			argv[1]);
-		exit(98);
-	}
-	close_file(inputFD);
-	close_file(outputFD);
-	return (0);
-}
 
 /**
- * close_file -ClosE  opened file
- * @FD: file descriptor
- * Return: null
+ * append_text_to_file - appends text at the end of a file
+ * @filename: A pointer to the name of the file
+ * @text_content: The string to add to the end of the file
+ * Return: If the function fails or filename is NULL - -1
+ *         and if file does not exist user lacks write permissions - -1.
+ *         Otherwise - 1
  */
-void close_file(int FD)
+int append_text_to_file(const char *filename, char *text_content)
 {
-	if (close(FD) == -1)
+	int o, w, len = 0;
+
+	if (filename == NULL)
+		return (-1);
+
+	if (text_content != NULL)
 	{
-		dprintf(STDERR_FILENO, "Error: Can't close fd %i\n", FD);
-		exit(100);
+		for (len = 0; text_content[len];)
+			len++;
 	}
+
+	o = open(filename, O_WRONLY | O_APPEND);
+	w = write(o, text_content, len);
+
+	if (o == -1 || w == -1)
+		return (-1);
+
+	close(o);
+
+	return (1);
 }
