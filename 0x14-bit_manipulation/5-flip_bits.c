@@ -1,7 +1,8 @@
 #include "main.h"
 
 /**
- * flip_bits - Calculate the number of bits needed to transform one number to another.
+ * flip_bits - Calculate the number of bits needed to transform on
+ * e number to another.
  * @n: The first number.
  * @m: The second number.
  *
