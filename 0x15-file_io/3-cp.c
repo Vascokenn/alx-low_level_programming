@@ -1,37 +1,72 @@
-#include <stdio.h>
-#include <stdlib.h>
 #include "main.h"
+#include <stdio.h>
 
 /**
- * append_text_to_file - Append text to the end of a file.
- * @filename: A pointer to the name of the file to which text will be appended.
- * @text_content: The content to append to the file.
- *
- * Description: This function appends the specified text to the end of a file.
- *
- * Return: 1 on success, -1 on failure.
+ * error_file - Check if files can be opened and handle errors.
+ * @file_from: File descriptor for the source file.
+ * @file_to: File descriptor for the destination file.
+ * @argv: Command-line arguments vector.
+ * Return: No return value.
  */
-int append_text_to_file(const char *filename, char *text_content)
+void error_file(int file_from, int file_to, char *argv[])
 {
-    int i = 0, file;
+	if (file_from == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't read from file %s\n", argv[1]);
+		exit(98);
+	}
+	if (file_to == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't write to %s\n", argv[2]);
+		exit(99);
+	}
+}
 
-    if (filename == NULL)
-        return (-1);
+/**
+ * main - Copy content from one file to another.
+ * @argc: Number of command-line arguments.
+ * @argv: Command-line arguments vector.
+ * Return: Always returns 0.
+ */
+int main(int argc, char *argv[])
+{
+	int file_from, file_to, err_close;
+	ssize_t nchars, nwr;
+	char buf[1024];
 
-    if (text_content == NULL)
-        text_content = "";
+	if (argc != 3)
+	{
+		dprintf(STDERR_FILENO, "%s\n", "Usage: cp file_from file_to");
+		exit(97);
+	}
 
-    while (text_content[i] != '\0')
-    {
-        i++;
-    }
+	file_from = open(argv[1], O_RDONLY);
+	file_to = open(argv[2], O_CREAT | O_WRONLY | O_TRUNC | O_APPEND, 0664);
+	error_file(file_from, file_to, argv);
 
-    file = open(filename, O_WRONLY | O_APPEND);
+	nchars = 1024;
+	while (nchars == 1024)
+	{
+		nchars = read(file_from, buf, 1024);
+		if (nchars == -1)
+			error_file(-1, 0, argv);
+		nwr = write(file_to, buf, nchars);
+		if (nwr == -1)
+			error_file(0, -1, argv);
+	}
 
-    if (file == -1)
-        return (-1);
+	err_close = close(file_from);
+	if (err_close == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_from);
+		exit(100);
+	}
 
-    write(file, text_content, i);
-
-    return (1);
+	err_close = close(file_to);
+	if (err_close == -1)
+	{
+		dprintf(STDERR_FILENO, "Error: Can't close fd %d\n", file_from);
+		exit(100);
+	}
+	return (0);
 }
