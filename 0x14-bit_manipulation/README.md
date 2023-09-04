@@ -1,0 +1,1 @@
+Bit manipulation involves the manipulation of individual bits within an integer to achieve specific tasks such as setting, clearing, toggling, or checking the status of bits. This repository aims to help you understand and apply bit manipulation techniques in your C programming projects.
