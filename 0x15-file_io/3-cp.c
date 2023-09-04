@@ -4,34 +4,34 @@
 
 /**
  * append_text_to_file - Append text to the end of a file.
- * @filename: A pointer to the name of the file to which to append.
+ * @filename: A pointer to the name of the file to which text will be appended.
  * @text_content: The content to append to the file.
  *
- * Description: This function appends text to the end of the specified file.
+ * Description: This function appends the specified text to the end of a file.
  *
  * Return: 1 on success, -1 on failure.
  */
 int append_text_to_file(const char *filename, char *text_content)
 {
-	int i = 0, file;
+    int i = 0, file;
 
-	if (filename == NULL)
-		return (-1);
+    if (filename == NULL)
+        return (-1);
 
-	if (text_content == NULL)
-		text_content = "";
+    if (text_content == NULL)
+        text_content = "";
 
-	while (text_content[i] != '\0')
-	{
-		i++;
-	}
+    while (text_content[i] != '\0')
+    {
+        i++;
+    }
 
-	file = open(filename, O_WRONLY | O_APPEND);
+    file = open(filename, O_WRONLY | O_APPEND);
 
-	if (file == -1)
-		return (-1);
+    if (file == -1)
+        return (-1);
 
-	write(file, text_content, i);
+    write(file, text_content, i);
 
-	return (1);
+    return (1);
 }
